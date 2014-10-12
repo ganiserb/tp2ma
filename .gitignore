@@ -1,0 +1,7 @@
+venv/
+.idea/
+__pycache__/
+*.sqlite3
+media/user_avatars/
+media/twiclo_images/
+migrations/
