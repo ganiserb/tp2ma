@@ -1,0 +1,6 @@
+Django==1.7
+Pillow==2.6.0
+django-crispy-forms==1.4.0
+ipython==2.3.0
+ply==3.4
+slimit==0.8.1
