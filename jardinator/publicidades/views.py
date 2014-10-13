@@ -1,3 +1,12 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from publicidades.models import Publicidad
 
-# Create your views here.
+
+@login_required
+def vista_publicidades(request):
+    """vista equipos no devueltos."""
+    publicidades = Publicidad.objects.all()
+
+    return render(request, 'publicidades/listapublicidades.html',
+                    {'publicidades': publicidades})
