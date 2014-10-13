@@ -42,4 +42,4 @@ class Planta(models.Model):
     costo = models.FloatField()
 
     class Meta:
-        verbose_name_plural = "Materiales"
+        verbose_name_plural = "Plantas"

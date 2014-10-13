@@ -7,3 +7,6 @@ class Publicidad(models.Model):
     texto = models.CharField(max_length=250)
     foto = models.ImageField(upload_to="imagenes_publicidades")
     fecha = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "Publicidades"
