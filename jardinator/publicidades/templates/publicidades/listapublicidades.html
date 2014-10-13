@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for publicidad in publicidades %}
+<table class="table table-bordered table-striped" width="20">
+    <tr>
+        <colgroup>
+            <col class="span9">
+            <col class="span">
+        </colgroup>
+        <td>{{ publicidad.titulo }}</td>
+        <td>{{ publicidad.texto }}</td>
+        <td>{{ publicidad.foto }}</td>
+    </tr>
+</table>
+{% endfor %}
+
+{% endblock content %}
