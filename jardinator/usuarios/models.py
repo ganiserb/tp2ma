@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class Usuario(AbstractUser):
-    nombre = models.CharField(max_length=25, blank=True)
+    nombre = models.CharField(max_length=25)
 
     EMPRESA = 'em'
     PERSONA = 'pe'

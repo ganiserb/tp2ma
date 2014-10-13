@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'usuarios',
     'publicidades',
 )
 
@@ -104,10 +105,10 @@ TEMPLATE_DIRS = (
 
 # AUTH
 
-#AUTH_USER_MODEL = 'usuarios.User'
-#LOGIN_URL = 'login'
+AUTH_USER_MODEL = 'usuarios.Usuario'
+LOGIN_URL = 'login'
 #LOGIN_REDIRECT_URL = 'home'  # Where to go after user requested login
-#username_regex = r'[\w.@+-]+'
+username_regex = r'[\w.@+-]+'
 
 # Crispyforms
 
