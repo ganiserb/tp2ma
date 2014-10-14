@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from usuarios.forms import UserCreationForm, UserChangeForm
+from usuarios.forms import UserChangeForm, FormCreacionUsuario
 from django.contrib.auth.admin import UserAdmin
 Usuario = get_user_model()
 
@@ -8,7 +8,7 @@ Usuario = get_user_model()
 class UserAdminModel(UserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
-    add_form = UserCreationForm
+    add_form = FormCreacionUsuario
 
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin

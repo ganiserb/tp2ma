@@ -107,7 +107,7 @@ TEMPLATE_DIRS = (
 
 AUTH_USER_MODEL = 'usuarios.Usuario'
 LOGIN_URL = 'login'
-#LOGIN_REDIRECT_URL = 'home'  # Where to go after user requested login
+LOGIN_REDIRECT_URL = 'home'  # Where to go after user requested login
 username_regex = r'[\w.@+-]+'
 
 # Crispyforms

@@ -12,7 +12,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from usuarios.models import Usuario
 
 
-class UserCreationForm(forms.ModelForm):
+class FormCreacionUsuario(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -32,7 +32,7 @@ class UserCreationForm(forms.ModelForm):
 
     def save(self, commit=True):
         # Save the provided password in hashed format
-        user = super(UserCreationForm, self).save(commit=False)
+        user = super(FormCreacionUsuario, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
