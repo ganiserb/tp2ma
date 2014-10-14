@@ -1,11 +1,12 @@
 from django.db import models
-from contrib.auth import get_user_model
-Usuario = get_user_model()
+from jardinator.settings import AUTH_USER_MODEL
 
-# Create your models here.
-class Solicitud:
 
-    def __init__(self):
-        pass
+class Solicitud(models.Model):
+    """ABM solicitudes."""
+    usuario = AUTH_USER_MODEL
+    texto = models.CharField(max_length=250)
+    fecha = models.DateTimeField(auto_now_add=True)
 
-    usuario
+    class Meta:
+        verbose_name_plural = "Solicitudes"
