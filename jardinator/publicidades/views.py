@@ -8,5 +8,5 @@ def vista_publicidades(request):
     """vista equipos no devueltos."""
     publicidades = Publicidad.objects.all()
 
-    return render(request, 'publicidades/listapublicidades.html',
+    return render(request, 'publicidades/lista.html',
                     {'publicidades': publicidades})
