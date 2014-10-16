@@ -1,6 +1,11 @@
 Django==1.7
 Pillow==2.6.0
+Unidecode==0.04.16
+django-admin-bootstrapped==2.0.5
+django-autoslug==1.7.2
+django-cities-light==2.4.3
 django-crispy-forms==1.4.0
 ipython==2.3.0
 ply==3.4
+six==1.8.0
 slimit==0.8.1
