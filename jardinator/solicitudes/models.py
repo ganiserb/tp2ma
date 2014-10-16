@@ -13,4 +13,4 @@ class Solicitud(models.Model):
             '%x %X'))
 
     class Meta:
-        verbose_name_plural = "Solicitudes"
+        verbose_name_plural = "Solicitudes de clientes"

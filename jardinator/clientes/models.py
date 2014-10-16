@@ -13,6 +13,9 @@ class Propiedad(models.Model):
     direccion = models.CharField(max_length=25)
     ciudad = models.ForeignKey(Ciudad)
 
+    class Meta:
+        verbose_name_plural = "Propiedades"
+
 
 class Jardin(models.Model):
     propiedad = models.ForeignKey(Propiedad)
@@ -22,3 +25,6 @@ class Jardin(models.Model):
                                      related_name='jardines')
     accesorios = models.ManyToManyField(inventarios.models.Material,
                                         related_name='jardines')
+
+    class Meta:
+        verbose_name_plural = "Jardines"

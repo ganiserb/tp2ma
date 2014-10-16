@@ -9,7 +9,7 @@ class Unidad(models.Model):
         return self.nombre
 
     class Meta:
-        verbose_name_plural = "Unidades"
+        verbose_name_plural = "Unidades de medida"
 
 
 class Material(models.Model):
@@ -23,7 +23,7 @@ class Material(models.Model):
         return self.descripcion
 
     class Meta:
-        verbose_name_plural = "Materiales"
+        verbose_name_plural = "Materiales de trabajo"
 
 
 class Familia(models.Model):
@@ -34,7 +34,7 @@ class Familia(models.Model):
         return self.nombre
 
     class Meta:
-        verbose_name_plural = "Familias"
+        verbose_name_plural = "Familias de plantas"
 
 
 class Planta(models.Model):
