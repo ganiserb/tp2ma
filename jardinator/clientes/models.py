@@ -26,8 +26,10 @@ class Jardin(models.Model):
     nombre = models.CharField(max_length=30)
     area = models.IntegerField(help_text="Areal del jardín, en metros cuadrados")
     plantas = models.ManyToManyField(inventarios.models.Planta,
+                                     through='DetallePlantas',
                                      related_name='jardines')
     accesorios = models.ManyToManyField(inventarios.models.Material,
+                                        through='DetalleMateriales',
                                         related_name='jardines')
 
     def __str__(self):
@@ -35,3 +37,29 @@ class Jardin(models.Model):
 
     class Meta:
         verbose_name_plural = "Jardines"
+
+
+class DetallePlantas(models.Model):
+    jardin = models.ForeignKey(Jardin)
+    tipo_planta = models.ForeignKey(inventarios.models.Planta,
+                                    name='Tipo de planta')
+    cantidad = models.IntegerField()
+
+    def __str__(self):
+        return ""
+
+    class Meta:
+        verbose_name_plural = "Plantas que posee"
+
+
+class DetalleMateriales(models.Model):
+    jardin = models.ForeignKey(Jardin)
+    tipo_material = models.ForeignKey(inventarios.models.Material,
+                                      name='Tipo de material')
+    cantidad = models.IntegerField()
+
+    def __str__(self):
+        return ""
+
+    class Meta:
+        verbose_name_plural = "Accesorios que contiene"
