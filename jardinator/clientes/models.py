@@ -24,7 +24,7 @@ class Propiedad(models.Model):
 class Jardin(models.Model):
     propiedad = models.ForeignKey(Propiedad)
     nombre = models.CharField(max_length=30)
-    area = models.IntegerField(help_text="Areal del jardín, en metros cuadrados")
+    area = models.IntegerField(help_text="Area del jardín, en metros cuadrados")
     plantas = models.ManyToManyField(inventarios.models.Planta,
                                      through='DetallePlantas',
                                      related_name='jardines')
