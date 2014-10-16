@@ -22,3 +22,5 @@ urlpatterns = patterns(
         name='logout'),
 
 )
+
+admin.site.site_header = 'Jardinator'

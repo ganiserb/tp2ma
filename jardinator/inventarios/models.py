@@ -19,6 +19,9 @@ class Material(models.Model):
     unidad = models.ForeignKey(Unidad, null=False)
     costo = models.FloatField()
 
+    def __str__(self):
+        return self.descripcion
+
     class Meta:
         verbose_name_plural = "Materiales"
 
@@ -26,6 +29,9 @@ class Material(models.Model):
 class Familia(models.Model):
     """Modelo familia"""
     nombre = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.nombre
 
     class Meta:
         verbose_name_plural = "Familias"
@@ -56,6 +62,9 @@ class Planta(models.Model):
     familia = models.ForeignKey(Familia, null=False)
     origen = models.CharField(max_length=250)
     costo = models.FloatField()
+
+    def __str__(self):
+        return self.nombre
 
     class Meta:
         verbose_name_plural = "Plantas"
