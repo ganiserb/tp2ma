@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
 from utilidades.models import Ciudad
-from clientes.models import Propiedad #en realidad es jardin
+from clientes.models import Jardin
 
 
 class Empleado(models.Model):
@@ -36,16 +36,17 @@ class Contrato(models.Model):
         (ejemplo, 'ejemplo'),
     )
 
-    jardin = models.ForeignKey(Propiedad)
+    jardin = models.ForeignKey(Jardin)
     fecha_inicio = models.DateTimeField()
-    fecha_fin_estimada = models.DateTimeField()
-    fecha_fin_real = models.DateTimeField()
+    fecha_fin_estimada = models.DateTimeField(null=True, blank=True)
+    fecha_fin_real = models.DateTimeField(null=True, blank=True)
     tipo_tarifa = models.CharField(max_length=2,
                             choices=tipo_tarifa_choices,
                             default=ejemplo)
 
     def __str__(self):
-        return self
+        return self.jardin.nombre + ' (' + self.fecha_inicio.strftime(
+            '%x %X') + ')'
 
     class Meta:
         verbose_name_plural = "Contratos"
@@ -58,7 +59,7 @@ class Tarea(models.Model):
     descripcion = models.CharField(max_length=500)
 
     def __str__(self):
-        return self
+        return self.nombre
 
     class Meta:
         verbose_name_plural = "Tareas"
@@ -71,7 +72,7 @@ class Log(models.Model):
     tarea = models.ForeignKey(Tarea)
 
     def __str__(self):
-        return self
+        return self.empleado.apellido + ', ' + self.empleado.nombre + ' (' + self.tarea.nombre + ')'
 
     class Meta:
         verbose_name_plural = "Log de tareas"
