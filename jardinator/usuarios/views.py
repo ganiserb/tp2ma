@@ -7,6 +7,7 @@ def registro(request):
     """
     Muestra y procesa el formulario de registro
     """
+    return HttpResponseRedirect(reverse('home')) # TODO: Para que no se puedan registrar
     if request.method == 'POST':
         form_registro = FormCreacionUsuario(request.POST)
         if form_registro.is_valid():

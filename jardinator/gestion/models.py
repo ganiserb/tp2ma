@@ -67,6 +67,7 @@ class Tarea(models.Model):
 
 class Log(models.Model):
     """ABM log de tareas."""
+    fecha = models.DateField()
     horas = models.IntegerField(validators=[MaxValueValidator(16)])
     empleado = models.ForeignKey(Empleado)
     tarea = models.ForeignKey(Tarea)

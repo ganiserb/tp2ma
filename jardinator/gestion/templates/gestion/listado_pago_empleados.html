@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<ul>
+    {% for registro in detalle_sueldos %}
+        <li>{{ registro.nombre }} {{ registro.apellido }} | {{ registro.horas }} horas</li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}
