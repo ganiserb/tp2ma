@@ -9,6 +9,10 @@ urlpatterns = patterns(
         'publicidades.views.vista_publicidades',
         name='home'),
 
+    url(r'^contacto/$',
+        'solicitudes.views.solicitar',
+        name='solicitar'),
+
     url(r'^registro/$',
         'usuarios.views.registro',
         name='registro'),

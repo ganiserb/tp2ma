@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'clientes',
     'utilidades',
     'gestion',
+    'crispy_forms',
 )
 
 MIDDLEWARE_CLASSES = (
