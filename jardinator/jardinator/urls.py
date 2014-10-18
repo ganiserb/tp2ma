@@ -25,6 +25,10 @@ urlpatterns = patterns(
         'django.contrib.auth.views.logout',
         name='logout'),
 
+    url(r'^sueldos/$',
+        'gestion.views.listar_pago_empleados',
+        name='sueldos'),
+
 )
 
 admin.site.site_header = 'Jardinator'
