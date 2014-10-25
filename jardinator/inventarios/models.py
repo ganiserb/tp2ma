@@ -25,6 +25,11 @@ class Insumo(models.Model):
         verbose_name_plural = "Insumos de trabajo"
 
 
+class StockInsumos(models.Model):
+    insumo = models.OneToOneField(Insumo)
+    cantidad = models.PositiveIntegerField()
+
+
 class Familia(models.Model):
     """Modelo familia"""
     nombre = models.CharField(max_length=150)
