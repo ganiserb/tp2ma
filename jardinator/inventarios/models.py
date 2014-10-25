@@ -12,10 +12,9 @@ class Unidad(models.Model):
         verbose_name_plural = "Unidades de medida"
 
 
-class Material(models.Model):
-    """Modelo insumos y accesorios."""
+class Insumo(models.Model):
+    """Insumos y accesorios."""
     descripcion = models.CharField(max_length=150)
-    cantidad = models.IntegerField()
     unidad = models.ForeignKey(Unidad)
     costo = models.FloatField()
 
@@ -23,7 +22,7 @@ class Material(models.Model):
         return self.descripcion
 
     class Meta:
-        verbose_name_plural = "Materiales de trabajo"
+        verbose_name_plural = "Insumos de trabajo"
 
 
 class Familia(models.Model):
@@ -51,8 +50,8 @@ class Planta(models.Model):
     )
 
     tipo_hoja = models.CharField(max_length=2,
-                            choices=TIPO_HOJA_CHOICES,
-                            default=CADUCA)
+                                 choices=TIPO_HOJA_CHOICES,
+                                 default=CADUCA)
 
     tipo_flor = models.CharField(max_length=150, blank=True)
     fecha_inicio_temporada_plantacion = models.DateField(null=True, blank=True)

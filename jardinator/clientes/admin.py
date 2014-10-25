@@ -8,7 +8,7 @@ class JardinDetallePlantasInline(admin.TabularInline):
 
 
 class JardinDetalleMaterialesInline(admin.TabularInline):
-    model = models.DetalleMateriales
+    model = models.DetalleInsumos
     extra = 1
 
 

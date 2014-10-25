@@ -28,8 +28,8 @@ class Jardin(models.Model):
     plantas = models.ManyToManyField(inventarios.models.Planta,
                                      through='DetallePlantas',
                                      related_name='jardines')
-    accesorios = models.ManyToManyField(inventarios.models.Material,
-                                        through='DetalleMateriales',
+    accesorios = models.ManyToManyField(inventarios.models.Insumo,
+                                        through='DetalleInsumos',
                                         related_name='jardines')
 
     def __str__(self):
@@ -52,10 +52,10 @@ class DetallePlantas(models.Model):
         verbose_name_plural = "Plantas que posee"
 
 
-class DetalleMateriales(models.Model):
+class DetalleInsumos(models.Model):
     jardin = models.ForeignKey(Jardin)
-    tipo_material = models.ForeignKey(inventarios.models.Material,
-                                      name='Tipo de material')
+    tipo_material = models.ForeignKey(inventarios.models.Insumo,
+                                      name='Tipo de insumo')
     cantidad = models.IntegerField()
 
     def __str__(self):
