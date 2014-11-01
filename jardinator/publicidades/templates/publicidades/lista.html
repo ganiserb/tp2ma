@@ -3,36 +3,50 @@
 {% load static %}
 
 {% block content %}
-
+<h1>Trabajos realizados</h1>
 <div class="row">
     {#  Contenedor Lista de Publicidades  #}
     <div class="col-md-12">
         <ul class="list-group">
-        {% for publicidad in publicidades %}
-            <li class="list-group-item">
+        {% if publicidades %}
+            {% for publicidad in publicidades %}
+                <li class="list-group-item">
+                    <div class="row">   {# Contenedor Publicidad #}
+                        <div class="col-md-12">
+                            <div class="row">   {# Titulo #}
+                                <div class="col-md-12">
+                                    <h3>{{ publicidad.titulo }}</h3>
+                                </div>
+                            </div>
+                            <div class="row">   {# Contenido #}
+                                <div class="col-md-12">
+                                    {{ publicidad.texto }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">   {# Foto #}
+                        <div class="col-md-12">
+                            <a href="{{ publicidad.foto.url }}" class="thumbnail">
+                                <img src="{{ publicidad.foto.url }}" class="img-thumbnail" />
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        {% else %}
+             <li class="list-group-item">
                 <div class="row">   {# Contenedor Publicidad #}
                     <div class="col-md-12">
                         <div class="row">   {# Titulo #}
                             <div class="col-md-12">
-                                <h3>{{ publicidad.titulo }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">   {# Contenido #}
-                            <div class="col-md-12">
-                                {{ publicidad.texto }}
+                                <h3><small>No hay nada que mostrar</small></h3>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">   {# Foto #}
-                    <div class="col-md-12">
-                        <a href="{{ publicidad.foto.url }}" class="thumbnail">
-                            <img src="{{ publicidad.foto.url }}" class="img-thumbnail" />
-                        </a>
-                    </div>
-                </div>
-            </li>
-        {% endfor %}
+             </li>
+        {% endif %}
         </ul>
     </div>
 </div>
