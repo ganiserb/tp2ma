@@ -14,7 +14,7 @@ class FormularioSolicitud(forms.ModelForm):
 
     class Meta:
         model = Solicitud
-        fields = ['texto']
+        fields = ['texto', 'tipo']
         widgets = {
             'texto': forms.Textarea()
         }
