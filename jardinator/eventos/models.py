@@ -1,10 +1,14 @@
 from django.db import models
+from clientes.models import Propiedad
+from jardinator.settings import AUTH_USER_MODEL
 from inventarios.models import Planta, Insumo
 
 
 class Evento(models.Model):
     """ABM eventos."""
     nombre = models.CharField(max_length=150)
+    cliente = models.ForeignKey(AUTH_USER_MODEL)
+    propiedad = models.ForeignKey(Propiedad)
     inicio = models.DateTimeField()
     fin = models.DateTimeField()
     plantas = models.ManyToManyField(Planta,
@@ -15,7 +19,7 @@ class Evento(models.Model):
                                      related_name='eventos')
 
     def __str__(self):
-        return self.nombre
+        return self.nombre + " (cliente " + self.cliente.nombre + ")"
 
     class Meta:
         verbose_name_plural = "Eventos"
@@ -65,7 +69,7 @@ class InsumosAsignados(models.Model):
     cantidad = models.PositiveIntegerField()
 
     def __str__(self):
-        return self.insumo.descripcion + ' (Evento "' + self.evento.nombre + '")'
+        return self.insumo.descripcion + ' (evento "' + self.evento.nombre + '")'
 
     class Meta:
         verbose_name_plural = "Insumos asignados"

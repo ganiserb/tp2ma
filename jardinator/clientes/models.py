@@ -7,7 +7,7 @@ import inventarios
 
 
 class Propiedad(models.Model):
-    cliente = models.ForeignKey(AUTH_USER_MODEL)
+    cliente = models.ForeignKey(AUTH_USER_MODEL, null=True, blank=True)
     coordenada_x = models.FloatField()
     coordenada_y = models.FloatField()
     direccion = models.CharField(max_length=25)
