@@ -14,7 +14,7 @@ class Empleado(models.Model):
     nombre = models.CharField(max_length=250)
     dni = models.CharField(max_length=25)
     telefono = models.CharField(max_length=25)
-    ciudad = Ciudad
+    ciudad = models.ForeignKey(Ciudad)
     foto = models.ImageField(upload_to="fotos_empleados", blank=True)
     #jornada es cuántas horas trabaja por día
     jornada = models.IntegerField(choices=hs_jornada_choices,

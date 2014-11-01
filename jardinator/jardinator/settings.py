@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'clientes',
     'utilidades',
     'gestion',
+    'eventos',
     'crispy_forms',
 )
 
