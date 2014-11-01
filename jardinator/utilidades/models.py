@@ -27,9 +27,11 @@ class ProxyUnidad(inventarios.models.Unidad):
     class Meta:
         proxy = True
         verbose_name_plural = inventarios.models.Unidad._meta.verbose_name_plural
+        verbose_name = inventarios.models.Unidad._meta.verbose_name
 
 
 class ProxyFamilia(inventarios.models.Familia):
     class Meta:
         proxy = True
         verbose_name_plural = inventarios.models.Familia._meta.verbose_name_plural
+        verbose_name = inventarios.models.Familia._meta.verbose_name
