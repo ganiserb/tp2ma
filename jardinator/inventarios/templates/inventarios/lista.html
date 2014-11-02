@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1>Cat&aacute;logo de plantas</h1>
+<div class="row">
+    {#  Contenedor plantas  #}
+    <div class="col-md-12">
+        <ul class="list-group">
+        {% if plantas %}
+            {% for planta in plantas %}
+                <li class="list-group-item">
+                    <div class="row">   {# Contenedor Planta #}
+                        <div class="col-md-12">
+                            <div class="row">   {# Nombre #}
+                                <div class="col-md-12">
+                                    <h3>{{ planta.nombre }}</h3>
+                                </div>
+                            </div>
+                            <div class="row">   {# Familia/Origen #}
+                                <div class="col-md-12">
+                                    {{ planta.familia }} ({{ planta.origen }})
+                                </div>
+                            </div>
+                            <div class="row">   {# Tipo hoja #}
+                                <div class="col-md-12">
+                                    {{ planta.tipo_hoja }}
+                                </div>
+                            </div>
+                            <div class="row">   {# Tipo flor #}
+                                <div class="col-md-12">
+                                    {{ planta.tipo_flor }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">   {# Foto #}
+                        <div class="col-md-12">
+                            <a href="{{ planta.foto.url }}" class="thumbnail">
+                                <img src="{{ planta.foto.url }}" class="img-thumbnail" />
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        {% else %}
+             <li class="list-group-item">
+                <div class="row">   {# Contenedor Planta #}
+                    <div class="col-md-12">
+                        <div class="row">   {# Titulo #}
+                            <div class="col-md-12">
+                                <h3><small>No hay nada que mostrar</small></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </li>
+        {% endif %}
+        </ul>
+    </div>
+</div>
+
+{% endblock content %}
