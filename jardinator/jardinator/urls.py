@@ -12,6 +12,10 @@ urlpatterns = patterns(
         'publicidades.views.vista_publicidades',
         name='home'),
 
+    url(r'^plantas/$',
+        'inventarios.views.vista_plantas',
+        name='catalogo'),
+
     url(r'^contacto/$',
         'solicitudes.views.solicitar',
         name='solicitar'),
