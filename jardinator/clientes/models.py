@@ -1,7 +1,7 @@
 from django.db import models
 from jardinator.settings import AUTH_USER_MODEL
 from utilidades.models import Ciudad
-import inventarios
+from inventarios.models import Insumo, Planta
 # from django.contrib.auth import get_user_model
 # User = get_user_model()
 
@@ -25,10 +25,10 @@ class Jardin(models.Model):
     propiedad = models.ForeignKey(Propiedad)
     nombre = models.CharField(max_length=30)
     area = models.IntegerField(help_text="Area del jardín, en metros cuadrados")
-    plantas = models.ManyToManyField(inventarios.models.Planta,
+    plantas = models.ManyToManyField(Planta,
                                      through='DetallePlantas',
                                      related_name='jardines')
-    accesorios = models.ManyToManyField(inventarios.models.Insumo,
+    accesorios = models.ManyToManyField(Insumo,
                                         through='DetalleInsumos',
                                         related_name='jardines')
 
@@ -41,8 +41,8 @@ class Jardin(models.Model):
 
 class DetallePlantas(models.Model):
     jardin = models.ForeignKey(Jardin)
-    tipo_planta = models.ForeignKey(inventarios.models.Planta,
-                                    name='Tipo de planta')
+    tipo_planta = models.ForeignKey(Planta,
+                                    verbose_name='Tipo de planta')
     cantidad = models.IntegerField()
 
     def __str__(self):
@@ -50,12 +50,13 @@ class DetallePlantas(models.Model):
 
     class Meta:
         verbose_name_plural = "Plantas que posee"
+        unique_together = ['jardin', 'tipo_planta']
 
 
 class DetalleInsumos(models.Model):
     jardin = models.ForeignKey(Jardin)
-    tipo_material = models.ForeignKey(inventarios.models.Insumo,
-                                      name='Tipo de insumo')
+    tipo_material = models.ForeignKey(Insumo,
+                                      verbose_name='Tipo de insumo')
     cantidad = models.IntegerField()
 
     def __str__(self):
@@ -63,3 +64,4 @@ class DetalleInsumos(models.Model):
 
     class Meta:
         verbose_name_plural = "Accesorios que contiene"
+        unique_together = ['jardin', 'tipo_material']

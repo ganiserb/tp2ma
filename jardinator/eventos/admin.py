@@ -17,5 +17,3 @@ class EventoAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(models.Evento, EventoAdmin)
-admin.site.register(models.StockPlantas)
-admin.site.register(models.StockInsumos)

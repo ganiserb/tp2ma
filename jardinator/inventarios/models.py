@@ -17,6 +17,7 @@ class Insumo(models.Model):
     descripcion = models.CharField(max_length=150)
     unidad = models.ForeignKey(Unidad)
     costo = models.FloatField()
+    stock = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.descripcion
@@ -61,6 +62,8 @@ class Planta(models.Model):
     familia = models.ForeignKey(Familia)
     origen = models.CharField(max_length=150)
     costo = models.FloatField()
+    stock = models.PositiveIntegerField(default=0)
+
 
     def __str__(self):
         return self.nombre

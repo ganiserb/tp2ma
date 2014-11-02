@@ -1,7 +1,9 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from clientes.models import Propiedad
 from jardinator.settings import AUTH_USER_MODEL
 from inventarios.models import Planta, Insumo
+from django.db.models import Sum
 
 
 class Evento(models.Model):
@@ -25,28 +27,28 @@ class Evento(models.Model):
         verbose_name_plural = "Eventos"
 
 
-class StockPlantas(models.Model):
-    """ABM inventario de plantas disponibles para un evento."""
-    planta = models.ForeignKey(Planta)
-    cantidad = models.PositiveIntegerField()
+# class StockPlantas(models.Model):
+#     """ABM inventario de plantas disponibles para un evento."""
+#     planta = models.OneToOneField(Planta)
+#     cantidad = models.PositiveIntegerField()
+#
+#     def __str__(self):
+#         return self.planta.nombre
+#
+#     class Meta:
+#         verbose_name_plural = "Stock de plantas"
 
-    def __str__(self):
-        return self.planta.nombre
 
-    class Meta:
-        verbose_name_plural = "Plantas disponibles"
-
-
-class StockInsumos(models.Model):
-    """ABM inventario de insumos disponibles para un evento."""
-    insumo = models.ForeignKey(Insumo)
-    cantidad = models.PositiveIntegerField()
-
-    def __str__(self):
-        return self.insumo.descripcion
-
-    class Meta:
-        verbose_name_plural = "Insumos disponibles"
+# class StockInsumos(models.Model):
+#     """ABM inventario de insumos disponibles para un evento."""
+#     insumo = models.OneToOneField(Insumo)
+#     cantidad = models.PositiveIntegerField()
+#
+#     def __str__(self):
+#         return self.insumo.descripcion
+#
+#     class Meta:
+#         verbose_name_plural = "Stock de insumos"
 
 
 class PlantasAsignadas(models.Model):
@@ -55,11 +57,31 @@ class PlantasAsignadas(models.Model):
     planta = models.ForeignKey(Planta)
     cantidad = models.PositiveIntegerField()
 
+    def clean(self):
+        if self.cantidad <= 0:
+            raise ValidationError('No se admiten valores no positivos')
+        eventos = PlantasAsignadas.objects.filter(evento__inicio__lt=self.evento.inicio)\
+                                          .filter(evento__fin__gt=self.evento.inicio)
+
+        plantas_asignadas = PlantasAsignadas.objects.filter(evento__id__in=eventos)\
+                                                    .filter(planta=self.planta)\
+                                                    .aggregate(Sum('cantidad'))['cantidad__sum']
+
+        stock_total = Planta.objects.get(id=self.planta.id).stock
+        if plantas_asignadas:
+            disponibles = (stock_total - plantas_asignadas)
+        else:
+            disponibles = stock_total
+
+        if self.cantidad > disponibles:
+            raise ValidationError('Se han asignado más plantas que las disponibles para esa fecha')
+
     def __str__(self):
-        return self.planta.nombre + ' (Evento "' + self.evento.nombre + '")'
+        return self.planta.nombre + ' (evento "' + self.evento.nombre + '")'
 
     class Meta:
         verbose_name_plural = "Plantas asignadas"
+        unique_together = ['evento', 'planta']
 
 
 class InsumosAsignados(models.Model):
@@ -68,8 +90,28 @@ class InsumosAsignados(models.Model):
     insumo = models.ForeignKey(Insumo)
     cantidad = models.PositiveIntegerField()
 
+    def clean(self):
+        if self.cantidad <= 0:
+            raise ValidationError('No se admiten valores no positivos')
+        eventos = InsumosAsignados.objects.filter(evento__inicio__lt=self.evento.inicio)\
+                                          .filter(evento__fin__gt=self.evento.inicio)
+
+        insumos_asignados = InsumosAsignados.objects.filter(evento__id__in=eventos)\
+                                                    .filter(insumo=self.insumo)\
+                                                    .aggregate(Sum('cantidad'))['cantidad__sum']
+
+        stock_total = Insumo.objects.get(id=self.insumo.id).stock
+        if insumos_asignados:
+            disponibles = (stock_total - insumos_asignados)
+        else:
+            disponibles = stock_total
+
+        if self.cantidad > disponibles:
+            raise ValidationError('Se han asignado más insumos que las disponibles para esa fecha')
+
     def __str__(self):
         return self.insumo.descripcion + ' (evento "' + self.evento.nombre + '")'
 
     class Meta:
         verbose_name_plural = "Insumos asignados"
+        unique_together = ['evento', 'insumo']
