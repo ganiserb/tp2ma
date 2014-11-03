@@ -1,7 +1,6 @@
 from django.db import models
 import inventarios
 
-
 class Region(models.Model):
     nombre = models.CharField(max_length=30)
 

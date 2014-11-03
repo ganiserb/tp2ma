@@ -30,10 +30,11 @@ class Insumo(models.Model):
     def clean(self):
         if self.stock < 0:
             raise ValidationError('No se admiten valores negativos')
-        insumos_asignados = InsumosAsignados.objects.filter(id=self.id)
 
+        insumos_asignados = InsumosAsignados.objects.filter(id=self.id)
         if insumos_asignados:
             raise ValidationError('No se puede cambiar el stock de insumos usados en eventos')
+        super(Insumo, self).clean()
 
 
 class Familia(models.Model):
@@ -74,7 +75,6 @@ class Planta(models.Model):
     costo = models.FloatField()
     stock = models.PositiveIntegerField(default=0)
 
-
     def __str__(self):
         return self.nombre
 
@@ -88,3 +88,5 @@ class Planta(models.Model):
 
         if plantas_asignadas:
             raise ValidationError('No se puede cambiar el stock de insumos usados en eventos')
+
+        super(Planta, self).clean()

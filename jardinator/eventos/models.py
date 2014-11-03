@@ -89,6 +89,8 @@ class PlantasAsignadas(models.Model):
         if self.cantidad > disponibles:
             raise ValidationError('Se han asignado más plantas que las disponibles para esa fecha')
 
+        super(PlantasAsignadas, self).clean()
+
     def __str__(self):
         return self.planta.nombre + ' (evento "' + self.evento.nombre + '")'
 
@@ -135,6 +137,8 @@ class InsumosAsignados(models.Model):
 
         if self.cantidad > disponibles:
             raise ValidationError('Se han asignado más insumos que las disponibles para esa fecha')
+
+        super(InsumosAsignados, self).clean()
 
     def __str__(self):
         return self.insumo.descripcion + ' (evento "' + self.evento.nombre + '")'
