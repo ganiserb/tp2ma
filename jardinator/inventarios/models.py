@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from eventos.models import PlantasAsignadas, InsumosAsignados
-
+import eventos
+#from eventos.models import PlantasAsignadas, InsumosAsignados
 
 class Unidad(models.Model):
     """Modelo unidad."""
@@ -31,7 +31,7 @@ class Insumo(models.Model):
         if self.stock < 0:
             raise ValidationError('No se admiten valores negativos')
 
-        insumos_asignados = InsumosAsignados.objects.filter(id=self.id)
+        insumos_asignados = eventos.models.InsumosAsignados.objects.filter(id=self.id)
         if insumos_asignados:
             raise ValidationError('No se puede cambiar el stock de insumos usados en eventos')
         super(Insumo, self).clean()
@@ -84,7 +84,7 @@ class Planta(models.Model):
     def clean(self):
         if self.stock < 0:
             raise ValidationError('No se admiten valores negativos')
-        plantas_asignadas = PlantasAsignadas.objects.filter(id=self.id)
+        plantas_asignadas = eventos.models.PlantasAsignadas.objects.filter(id=self.id)
 
         if plantas_asignadas:
             raise ValidationError('No se puede cambiar el stock de insumos usados en eventos')
