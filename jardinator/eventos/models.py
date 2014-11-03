@@ -60,12 +60,25 @@ class PlantasAsignadas(models.Model):
     def clean(self):
         if self.cantidad <= 0:
             raise ValidationError('No se admiten valores no positivos')
-        eventos = PlantasAsignadas.objects.filter(evento__inicio__lt=self.evento.inicio)\
-                                          .filter(evento__fin__gt=self.evento.inicio)
+        eventos_inicio = PlantasAsignadas.objects.filter(evento__inicio__lt=self.evento.inicio)\
+                                                 .filter(evento__fin__gt=self.evento.inicio)
 
-        plantas_asignadas = PlantasAsignadas.objects.filter(evento__id__in=eventos)\
-                                                    .filter(planta=self.planta)\
-                                                    .aggregate(Sum('cantidad'))['cantidad__sum']
+        eventos_fin = PlantasAsignadas.objects.filter(evento__inicio__lt=self.evento.fin)\
+                                              .filter(evento__fin__gt=self.evento.fin)
+
+        plantas_inicio = PlantasAsignadas.objects.filter(evento__id__in=eventos_inicio)\
+                                                 .filter(planta=self.planta)\
+                                                 .aggregate(Sum('cantidad'))['cantidad__sum']
+
+        plantas_fin = PlantasAsignadas.objects.filter(evento__id__in=eventos_fin)\
+                                              .filter(planta=self.planta)\
+                                              .aggregate(Sum('cantidad'))['cantidad__sum']
+        if plantas_inicio and plantas_fin:
+            plantas_asignadas = plantas_inicio + plantas_fin
+        elif plantas_inicio:
+            plantas_asignadas = plantas_inicio
+        else:
+            plantas_asignadas = plantas_fin
 
         stock_total = Planta.objects.get(id=self.planta.id).stock
         if plantas_asignadas:
@@ -93,12 +106,26 @@ class InsumosAsignados(models.Model):
     def clean(self):
         if self.cantidad <= 0:
             raise ValidationError('No se admiten valores no positivos')
-        eventos = InsumosAsignados.objects.filter(evento__inicio__lt=self.evento.inicio)\
+        eventos_inicio = InsumosAsignados.objects.filter(evento__inicio__lt=self.evento.inicio)\
                                           .filter(evento__fin__gt=self.evento.inicio)
 
-        insumos_asignados = InsumosAsignados.objects.filter(evento__id__in=eventos)\
-                                                    .filter(insumo=self.insumo)\
-                                                    .aggregate(Sum('cantidad'))['cantidad__sum']
+        eventos_fin = InsumosAsignados.objects.filter(evento__inicio__lt=self.evento.fin)\
+                                          .filter(evento__fin__gt=self.evento.fin)
+
+        insumos_inicio = InsumosAsignados.objects.filter(evento__id__in=eventos_inicio)\
+                                                 .filter(insumo=self.insumo)\
+                                                 .aggregate(Sum('cantidad'))['cantidad__sum']
+
+        insumos_fin = InsumosAsignados.objects.filter(evento__id__in=eventos_fin)\
+                                              .filter(insumo=self.insumo)\
+                                              .aggregate(Sum('cantidad'))['cantidad__sum']
+
+        if insumos_inicio and insumos_fin:
+            insumos_asignados = insumos_inicio + insumos_fin
+        elif insumos_inicio:
+            insumos_asignados = insumos_inicio
+        else:
+            insumos_asignados = insumos_fin
 
         stock_total = Insumo.objects.get(id=self.insumo.id).stock
         if insumos_asignados:
